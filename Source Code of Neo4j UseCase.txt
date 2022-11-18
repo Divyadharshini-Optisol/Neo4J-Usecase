@@ -1,0 +1,73 @@
+--Creating Node with Labels and Properties
+
+CREATE (Divya:People{name: "Divya",mobile:9789900998,age:23,city:"Chennai"})
+CREATE (Nivetha: People {name: "Nivetha",mobile:8925298928,age:23,city:"Chennai"})
+CREATE (Kavya: People {name: "Kavya",mobile:9789470466,age:24,city:"Salem"})
+CREATE (Sharmi: People {name: "Sharmi",mobile:8925148656,age:24,city:"Coimbatore"})
+CREATE (Balaji: People {name: "Balaji",mobile:8825539047,age:23,city:"Chennai"})
+CREATE (Reshma: People {name: "Reshma",mobile:8765450934,age:24,city:"Thiruvallur"})
+CREATE (Nazar: People {name: "Nazar",mobile:6380377708,age:23,city:"Chennai"})
+
+--Creating Relationships
+
+MATCH (Kavya: People {name: "Kavya",mobile:9789470466,age:24,city:"Salem"}),
+(Divya:People {name: "Divya",mobile:9789900998,age:23,city:"Chennai"})
+CREATE (Kavya)-[kd:FOLLOWS]->(Divya)
+
+MATCH (Kavya: People {name: "Kavya",mobile:9789470466,age:24,city:"Salem"}),
+(Sharmi: People {name: "Sharmi",mobile:8925148656,age:24,city:"Coimbatore"})
+CREATE (Kavya)-[ks:FOLLOWS]->(Sharmi)
+
+MATCH (Divya:People{name: "Divya",mobile:9789900998,age:23,city:"Chennai"}),
+(Nivetha: People {name: "Nivetha",mobile:8925298928,age:23,city:"Chennai"})
+CREATE (Divya)-[dni:FOLLOWS]->(Nivetha)
+
+MATCH (Divya:People{name: "Divya",mobile:9789900998,age:23,city:"Chennai"}),
+(Nazar: People {name: "Nazar",mobile:6380377708,age:23,city:"Chennai"})
+CREATE (Divya)-[dna:FOLLOWS]->(Nazar)
+
+MATCH (Sharmi: People {name: "Sharmi",mobile:8925148656,age:24,city:"Coimbatore"}),
+(Balaji: People {name: "Balaji",mobile:8825539047,age:23,city:"Chennai"})
+CREATE (Sharmi)-[sb:FOLLOWS]->(Balaji)
+
+MATCH (Sharmi: People {name: "Sharmi",mobile:8925148656,age:24,city:"Coimbatore"}),
+(Reshma: People {name: "Reshma",mobile:8765450934,age:24,city:"Thiruvallur"})
+CREATE (Sharmi)-[sr:FOLLOWS]->(Reshma)
+
+--Searching
+
+MATCH(People)
+WHERE People.city = "Chennai"
+RETURN People
+
+MATCH(People)
+WHERE People.city <> "Chennai"
+RETURN People
+
+--Sorting
+
+MATCH(n)
+RETURN n.name
+ORDER BY n.name
+
+MATCH(n)
+RETURN n.name
+ORDER BY n.name DESC
+
+--Retrieving a particular Node
+
+MATCH(Divya:People{name: "Divya",mobile:9789900998,age:23,city:"Chennai"})
+<-[kd:FOLLOWS]-(Kavya)
+RETURN Divya
+
+--Pagination
+
+MATCH (n)
+RETURN n.name
+ORDER BY n.name DESC
+SKIP 2
+
+MATCH (n)   
+RETURN n.name 
+ORDER BY n.name DESC  
+LIMIT 3 
